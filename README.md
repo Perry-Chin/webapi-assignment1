@@ -23,28 +23,25 @@ To use this module in your Node.js project, follow these steps:
 Once the module is installed, you can run the following functions:
 
 + **playlist.searchSongs(query)**
-- This function allows the user to search for songs by artist or title. 
-- The search query is not case-sensitive and can take any form.
+This function allows the user to search for songs by artist or title. The search query is not case-sensitive and can take any form.
 
 + **playlist.createPlaylist(playlistName)**
-- This function allows the user to create a playlist with the specified name. 
-- The specified name must be unique and cannot already exist.
+This function allows the user to create a playlist with the specified name. The specified name must be unique and cannot already exist.
 
 + **playlist.editPlaylist(oldname, newname)**
-- This function allows the user to edit the name of an existing playlist.
-- The new name must be unique and cannot already exist, except if it's the same as the old name.
+This function allows the user to edit the name of an existing playlist. The new name must be unique and cannot already exist, except if it's the same as the old name.
 
 + **playlist.viewPlaylist(playlistName)**
-- This function allows the user to view the songs in their playlist.
+This function allows the user to view the songs in their playlist.
 
 + **playlist.addSongsToPlaylist(songName)**
-- This function allows the user to add a song to an existing playlist.
+This function allows the user to add a song to an existing playlist.
 
 + **playlist.removeSongsFromPlaylist(songName)**
-- This function will remove a song from their playlist.
+This function will remove a song from their playlist.
 
 + **playlist.recommendSongs(playlistName)**
-- This function provides users with song recommendations from the same genre as the songs in their playlist.
+This function provides users with song recommendations from the same genre as the songs in their playlist.
 
 ## Example
 
