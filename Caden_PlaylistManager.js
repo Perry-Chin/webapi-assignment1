@@ -37,6 +37,7 @@ function findPlaylist(playlistName) {
 module.exports = {
 
     // Function to search for songs by the artist name or song title
+    // The search query is not case-sensitive and can take any form.
     searchSongs(query) {
 
         const results = songs.filter(song => {
@@ -88,7 +89,13 @@ module.exports = {
             return false;
         }
         
-        //Update playlist name
+        // Check if the new playlist name already exists and is not the old name
+        if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
+            console.log(`Error: Playlist with name '${newName}' already exists.`);
+            return false;
+        }
+
+        //Update playlist name with the new name
         playlist.name = newName;
         console.log(`Playlist renamed from '${oldName}' to '${newName}'.`);
         return true;
