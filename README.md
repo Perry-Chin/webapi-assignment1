@@ -53,7 +53,7 @@ Below is an example of what the `app.js` file should look like
 const playlist = require('./Caden_PlaylistManager.js');
 
 // Search for songs with the same name
-playlist.searchSongs("Enemy") 
+playlist.searchSongs("Enemy");
 
 // Create a new playlist
 playlist.createPlaylist("MyPlaylist");
