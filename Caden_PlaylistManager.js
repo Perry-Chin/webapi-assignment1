@@ -40,10 +40,27 @@ function playlistError(playlistName, message) {
     return false;
 }
 
+// Create a mapping of genres to songs
+const genreToSongsMap = new Map();
+songs.forEach(song => {
+    song.genre.forEach(genre => {
+        // Check if the genre exists
+        if (!genreToSongsMap.has(genre)) {
+            genreToSongsMap.set(genre, []);
+        }
+        // Push the current song to the array associated with the genre
+        genreToSongsMap.get(genre).push(song);
+    });
+});
+
 module.exports = {
 
-    // Function to search for songs by the artist name or song title
-    // The search query is not case-sensitive and can take any form.
+    /**
+     * Function to search for songs by the artist name or song title.
+     * The search query is not case-sensitive and can take any form.
+     * @param {string} query - The search query for song title or artist.
+     * @returns {Array} An array of songs matching the search query.
+     */
     searchSongs(query) {
 
         const results = songs.filter(song => {
@@ -70,23 +87,42 @@ module.exports = {
         }
     },
 
-    // Function to create a new playlist
+    /**
+     * Function to create a new playlist.
+     * @param {string} playlistName - The name of the new playlist.
+     * @returns {boolean} True if the playlist is created successfully, false otherwise.
+     */
     createPlaylist(playlistName) {
+
+        // Check if playlist name is empty
+        if (!playlistName.trim()) {
+            return playlistError(playlistName, "is not allowed"); 
+        }
 
         // Check if playlist already exist
         if (findPlaylist(playlistName)) {
             return playlistError(playlistName, "already exists"); 
         }
-    
+        
         // Create playlist
         playlists.push({ name: playlistName, songs: [] });
         console.log(`Playlist '${playlistName}' created.`);
         return true;
     },
 
-    // Function to edit a playlist's name
+    /**
+     * Edit the name of a playlist.
+     * @param {string} oldName - The current name of the playlist.
+     * @param {string} newName - The new name for the playlist.
+     * @returns {boolean} True if the playlist name is edited successfully, false otherwise.
+     */
     editPlaylist(oldName, newName) {
 
+        // Check if playlist name is empty
+        if (!newName.trim()) {
+            return playlistError(newName, "is not allowed"); 
+        }
+        
         // Check if playlist does not exist
         let playlist = findPlaylist(oldName);
         if (!playlist) {
@@ -105,7 +141,11 @@ module.exports = {
         return true;
     },
 
-    // Function to view all songs in a selected playlist with title and artist
+    /**
+     * Function to view all songs in a selected playlist with title and artist.
+     * @param {string} playlistName - The name of the playlist to view.
+     * @returns {boolean} True if songs are displayed successfully, false if the playlist is empty or not found.
+     */
     viewPlaylist(playlistName) {
 
         // Check if playlist does not exist
@@ -119,6 +159,7 @@ module.exports = {
             console.log("Playlist is empty.");
             return false;
         } 
+
         // Show all songs in the playlist with title and artist
         else {
             console.log(`Songs in ${playlistName}:`);
@@ -127,7 +168,12 @@ module.exports = {
         }
     },
 
-    // Function to add a song to a selected playlist
+    /**
+     * Function to add a song to a selected playlist.
+     * @param {string} playlistName - The name of the playlist to which the song will be added.
+     * @param {string} songTitle - The title of the song to add.
+     * @returns {boolean} True if the song is added successfully, false otherwise.
+     */
     addSongToPlaylist(playlistName, songTitle) {
 
         // Check if playlist does not exist
@@ -155,7 +201,12 @@ module.exports = {
         return true;
     },
 
-    // Function to remove a song from a selected playlist
+    /**
+     * Function to remove a song from a selected playlist.
+     * @param {string} playlistName - The name of the playlist from which the song will be removed.
+     * @param {string} songTitle - The title of the song to remove.
+     * @returns {boolean} True if the song is removed successfully, false otherwise.
+     */
     removeSongFromPlaylist(playlistName, songTitle) {
 
         // Check if playlist does not exist
@@ -177,25 +228,39 @@ module.exports = {
         return true;
     }, 
 
-    // Function to recommend similar songs from the same genre as the songs in their playlist
+    /**
+     * Function to recommend similar songs from the same genre as the songs in a playlist.
+     * @param {string} playlistName - The name of the playlist for which recommendations will be made.
+     * @returns {boolean} True if recommendations are displayed successfully, false if the playlist is not found or no recommendations are available.
+     */
     recommendSongs(playlistName) {
-
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
         if (!playlist) {
             return playlistError(playlistName, "not found"); 
         }
 
-        // Get all genres from the playlist
+        // Get all genres from songs in the playlist
         const playlistGenres = new Set(); 
         playlist.songs.forEach(song => {
             song.genre.forEach(genre => playlistGenres.add(genre));
         });
 
+        // Array to store recommendations
+        const recommendations = [];
+
         // Find songs with matching genres
-        const recommendations = songs.filter(song => {
-            return song.genre.some(genre => playlistGenres.has(genre)) &&
-                   !playlist.songs.includes(song); // Exclude songs already in the playlist
+        playlistGenres.forEach(genre => {
+            const genreSongs = genreToSongsMap.get(genre);
+            // Check if there are songs available for the current genre
+            if (genreSongs) {
+                genreSongs.forEach(song => {
+                    // Exclude songs already in the playlist
+                    if (!playlist.songs.some(playlistSong => playlistSong.title === song.title)) {
+                        recommendations.push(song); // Add the song to recommendations
+                    }
+                });
+            }
         });
 
         // No songs matching the genre
