@@ -26,10 +26,10 @@ Once the module is installed, you can run the following functions:
     This function allows the user to search for songs by artist or title. The search query is not case-sensitive and can take any form.
 
 + **playlist.createPlaylist(playlistName)**     
-    This function allows the user to create a playlist with the specified name. The specified name must be unique and cannot already exist.
+    This function allows the user to create a playlist with the specified name. If the playlist name is already in use or is an empty string, an error will be returned.
 
 + **playlist.editPlaylist(oldname, newname)**     
-    This function allows the user to edit the name of an existing playlist. The new name must be unique and cannot already exist, except if it's the same as the old name.
+    This function allows the user to edit the name of an existing playlist. If the new name is empty or already exists (except for the old name), an error will be returned.
 
 + **playlist.viewPlaylist(playlistName)**     
     This function allows the user to view the songs in their playlist.
