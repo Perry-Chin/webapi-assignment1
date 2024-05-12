@@ -34,6 +34,12 @@ function findPlaylist(playlistName) {
     return playlists.find(playlist => playlist.name === playlistName);
 }
 
+// Helper function for error messages
+function playlistError(playlistName, message) {
+    console.log(`Error: Playlist with name '${playlistName}' ${message}.`);
+    return false;
+}
+
 module.exports = {
 
     // Function to search for songs by the artist name or song title
@@ -54,7 +60,7 @@ module.exports = {
         // Check if no songs are found matching the search query
         if (results.length === 0) {
             console.log("No songs found matching your search.");
-            return [];
+            return false;
         } 
         // If songs are found matching the search query
         else {
@@ -69,8 +75,7 @@ module.exports = {
 
         // Check if playlist already exist
         if (findPlaylist(playlistName)) {
-            console.log(`Error: Playlist with name '${playlistName}' already exists.`);
-            return false;
+            return playlistError(playlistName, "already exists"); 
         }
     
         // Create playlist
@@ -85,8 +90,7 @@ module.exports = {
         // Check if playlist does not exist
         let playlist = findPlaylist(oldName);
         if (!playlist) {
-            console.log(`Error: Playlist '${oldName}' not found.`);
-            return false;
+            return playlistError(oldName, "not found"); 
         }
         
         // Check if the new playlist name already exists and is not the old name
@@ -107,8 +111,7 @@ module.exports = {
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
         if (!playlist) {
-            console.log(`Error: Playlist '${playlistName}' not found.`);
-            return false;
+            return playlistError(playlistName, "not found"); 
         }
         
         // Check if playlist contains songs
@@ -130,18 +133,22 @@ module.exports = {
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
         if (!playlist) {
-            console.log(`Error: Playlist '${playlistName}' not found.`);
-            return false;
+            return playlistError(playlistName, "not found"); 
         }
 
         // Check if song exist
         let songToAdd = songs.find(song => song.title === songTitle);
-
         if (!songToAdd) {
             console.log(`Error: Song ${songTitle} not found.`);
             return false;
         }
         
+        // Check if the song already exists in the playlist
+        if (playlist.songs.some(song => song.title === songTitle)) {
+            console.log(`Error: Song '${songTitle}' already exists in playlist '${playlistName}'.`);
+            return false;
+        }
+
         // Add song to playlist
         playlist.songs.push(songToAdd);
         console.log(`${songTitle} added to playlist, ${playlistName}.`);
@@ -154,8 +161,7 @@ module.exports = {
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
         if (!playlist) {
-            console.log(`Error: Playlist '${playlistName}' not found.`);
-            return false;
+            return playlistError(playlistName, "not found"); 
         }
 
         // Check if song exist in playlist
@@ -177,8 +183,7 @@ module.exports = {
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
         if (!playlist) {
-            console.log(`Error: Playlist '${playlistName}' not found.`);
-            return;
+            return playlistError(playlistName, "not found"); 
         }
 
         // Get all genres from the playlist
