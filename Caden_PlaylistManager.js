@@ -4,7 +4,7 @@ const songs = [
     {
         title: 'Enemy',
         artist: 'Imagine Dragons',
-        genre: ['Alernative', 'Rock'],
+        genre: ['Alternative', 'Rock'],
         year: 2021
     },
     {
@@ -14,9 +14,15 @@ const songs = [
         year: 2017
     },
     {
+        title: 'Heathens',
+        artist: 'twenty one pilots',
+        genre: ['Pop', 'Rock'],
+        year: 2016
+    },
+    {
         title: 'Hymn for the Weekend',
         artist: 'Coldplay',
-        genre: ['Alernative', 'Indie'],
+        genre: ['Alternative', 'Indie'],
         year: 2015
     }
 ]
@@ -44,10 +50,12 @@ module.exports = {
                    lowerCaseArtist.includes(lowerCaseQuery);
         });
 
+        // Check if no songs are found matching the search query
         if (results.length === 0) {
             console.log("No songs found matching your search.");
             return [];
         } 
+        // If songs are found matching the search query
         else {
             console.log("Search Results:");
             results.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
@@ -86,7 +94,7 @@ module.exports = {
         return true;
     },
 
-    // Function to view the contents of a selected playlist
+    // Function to view all songs in a selected playlist with title and artist
     viewPlaylist(playlistName) {
 
         // Check if playlist does not exist
@@ -101,9 +109,10 @@ module.exports = {
             console.log("Playlist is empty.");
             return false;
         } 
-        // Show all songs in the playlist
+        // Show all songs in the playlist with title and artist
         else {
-            playlist.songs.forEach(song => console.log(`- ${song.title}`));
+            console.log(`Songs in ${playlistName}:`);
+            playlist.songs.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
             return true;
         }
     },
@@ -128,7 +137,7 @@ module.exports = {
         
         // Add song to playlist
         playlist.songs.push(songToAdd);
-        console.log(`${songTitle} added to playlist ${playlistName}.`);
+        console.log(`${songTitle} added to playlist, ${playlistName}.`);
         return true;
     },
 
@@ -177,9 +186,11 @@ module.exports = {
                    !playlist.songs.includes(song); // Exclude songs already in the playlist
         });
 
+        // No songs matching the genre
         if (recommendations.length === 0) {
             console.log("No recommendations found.");
         } 
+        // Show all songs with same as genre as songs in playlist
         else {
             console.log(`Recommendations for playlist '${playlistName}':`);
             recommendations.forEach(song => console.log(`- ${song.title} by ${song.artist}`));

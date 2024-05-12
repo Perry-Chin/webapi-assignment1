@@ -10,7 +10,7 @@ To use this module in your Node.js project, follow these steps:
 1. Install Node.js if you don't have it already, download and install Node.js from https://nodejs.org/.
 2. Save the `Caden_PlaylistManager.js` file in your project directory.
 3. Create a new file named `app.js`
-4. In `app.js`, import the module using the correct file path
+4. In `app.js`, insert the code below to import the module using the correct file path
     ```js
     const playlist = require('./Caden_PlaylistManager.js');
     ```
@@ -45,7 +45,11 @@ This function provides users with song recommendations from the same genre as th
 
 ## Example
 
+Below is an example of what the `app.js` should look like
+
 ```js
+    // In app.js
+
     const playlist = require('./Caden_PlaylistManager.js');
 
     // Search for songs with the same name
@@ -55,7 +59,7 @@ This function provides users with song recommendations from the same genre as th
     playlist.createPlaylist("MyPlaylist");
 
     // Add a song to the playlist
-    playlist.addSongsToPlaylist("MyPlaylist", "Enemy");
+    playlist.addSongToPlaylist("MyPlaylist", "Enemy");
 
     // View the contents of the playlist
     playlist.viewPlaylist("MyPlaylist");
@@ -67,5 +71,5 @@ This function provides users with song recommendations from the same genre as th
     playlist.recommendSongs("NewPlaylist");
 
     // Remove a song from the playlist
-    playlist.removeSongsFromPlaylist("MyPlaylist", "Enemy");
+    playlist.removeSongFromPlaylist("NewPlaylist", "Enemy");
  ```
