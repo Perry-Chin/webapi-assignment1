@@ -234,7 +234,7 @@ module.exports = {
      * @returns {boolean} True if recommendations are displayed successfully, false if the playlist is not found or no recommendations are available.
      */
     recommendSongs(playlistName) {
-        
+
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
         if (!playlist) {
@@ -267,11 +267,13 @@ module.exports = {
         // No songs matching the genre
         if (recommendations.length === 0) {
             console.log("No recommendations found.");
+            return false;
         } 
         // Show all songs with same as genre as songs in playlist
         else {
             console.log(`Recommendations for playlist '${playlistName}':`);
             recommendations.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
+            return true;
         }
     }
 }
