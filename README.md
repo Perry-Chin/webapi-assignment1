@@ -28,42 +28,44 @@ This function allows the user to search for songs by artist or title
 + **playlist.createPlaylist(playlistName)**
 This function allows the user to create a playlist with the specified name
 
-+ **module.editPlaylist(oldname, newname)**
++ **playlist.editPlaylist(oldname, newname)**
 This function allows the user to edit the name of an existing playlist
 
-+ **module.viewPlaylist(playlistName)**
++ **playlist.viewPlaylist(playlistName)**
 This function allows the user to view the songs in their playlist
 
-+ **module.addSongsToPlaylist(songName)**
++ **playlist.addSongsToPlaylist(songName)**
 This function allows the user to add a song to an existing playlist
 
-+ **module.removeSongsFromPlaylist(songName)**
++ **playlist.removeSongsFromPlaylist(songName)**
 This function will remove a song from their playlist
 
-+ **module.recommendSongs(playlistName)**
++ **playlist.recommendSongs(playlistName)**
 This function provides users with song recommendations from the same genre as the songs in their playlist
 
 ## Example
 
 ```js
-    const module = require('./Caden_PlaylistManager.js');
+    const playlist = require('./Caden_PlaylistManager.js');
+
+    // Search for songs with the same name
+    playlist.searchSongs("Enemy") 
 
     // Create a new playlist
-    module.createPlaylist("MyPlaylist");
+    playlist.createPlaylist("MyPlaylist");
 
     // Add a song to the playlist
-    module.addSongsToPlaylist("MyPlaylist", "Enemy");
+    playlist.addSongsToPlaylist("MyPlaylist", "Enemy");
 
     // View the contents of the playlist
-    module.viewPlaylist("MyPlaylist");
-
-    // Remove a song from the playlist
-    module.removeSongsFromPlaylist("MyPlaylist", "Enemy");
+    playlist.viewPlaylist("MyPlaylist");
 
     // Edit the playlist name
-    module.editPlaylist("MyPlaylist", "NewPlaylist");
+    playlist.editPlaylist("MyPlaylist", "NewPlaylist");
 
     // Get song recommendations based on the playlist
-    module.recommendSongs("NewPlaylist");
+    playlist.recommendSongs("NewPlaylist");
 
+    // Remove a song from the playlist
+    playlist.removeSongsFromPlaylist("MyPlaylist", "Enemy");
  ```
