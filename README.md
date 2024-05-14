@@ -34,11 +34,11 @@ Once the module is installed, you can run the following functions:
 + **playlist.viewPlaylist(playlistName)**     
     This function allows the user to view the songs in their playlist.
 
-+ **playlist.addSongsToPlaylist(songName, artist)**     
-    This function allows the user to add a song to an existing playlist. The song name and artist parameters are case-sensitive.
++ **playlist.addSongsToPlaylist(playlistName, songName, artist)**     
+    This function allows the user to add a song to an existing playlist.
 
-+ **playlist.removeSongsFromPlaylist(songName, artist)**     
-    This function will remove a song from their playlist. The song name and artist parameters are case-sensitive.
++ **playlist.removeSongsFromPlaylist(playlistName, songName, artist)**     
+    This function will remove a song from their playlist.
 
 + **playlist.recommendSongs(playlistName)**     
     This function provides users with song recommendations from the same genre as the songs in their playlist.
