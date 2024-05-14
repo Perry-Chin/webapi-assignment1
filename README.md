@@ -34,11 +34,11 @@ Once the module is installed, you can run the following functions:
 + **playlist.viewPlaylist(playlistName)**     
     This function allows the user to view the songs in their playlist.
 
-+ **playlist.addSongsToPlaylist(songName)**     
-    This function allows the user to add a song to an existing playlist.
++ **playlist.addSongsToPlaylist(songName, artist)**     
+    This function allows the user to add a song to an existing playlist. The song name and artist parameters are case-sensitive.
 
-+ **playlist.removeSongsFromPlaylist(songName)**     
-    This function will remove a song from their playlist.
++ **playlist.removeSongsFromPlaylist(songName, artist)**     
+    This function will remove a song from their playlist. The song name and artist parameters are case-sensitive.
 
 + **playlist.recommendSongs(playlistName)**     
     This function provides users with song recommendations from the same genre as the songs in their playlist.
@@ -59,7 +59,7 @@ playlist.searchSongs("Enemy");
 playlist.createPlaylist("MyPlaylist");
 
 // Add a song to the playlist
-playlist.addSongToPlaylist("MyPlaylist", "Enemy");
+playlist.addSongToPlaylist("MyPlaylist", "Enemy", 'Imagine Dragons');
 
 // View the contents of the playlist
 playlist.viewPlaylist("MyPlaylist");
@@ -71,5 +71,5 @@ playlist.editPlaylist("MyPlaylist", "NewPlaylist");
 playlist.recommendSongs("NewPlaylist");
 
 // Remove a song from the playlist
-playlist.removeSongFromPlaylist("NewPlaylist", "Enemy");
+playlist.removeSongFromPlaylist("NewPlaylist", "Enemy", 'Imagine Dragons');
  ```

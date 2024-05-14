@@ -82,7 +82,7 @@ module.exports = {
         // If songs are found matching the search query
         else {
             console.log("Search Results:");
-            results.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
+            results.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
             return results; // Return the array of found songs
         }
     },
@@ -163,7 +163,7 @@ module.exports = {
         // Show all songs in the playlist with title and artist
         else {
             console.log(`Songs in ${playlistName}:`);
-            playlist.songs.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
+            playlist.songs.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
             return true;
         }
     },
@@ -172,9 +172,10 @@ module.exports = {
      * Function to add a song to a selected playlist.
      * @param {string} playlistName - The name of the playlist to which the song will be added.
      * @param {string} songTitle - The title of the song to add.
+     * @param {string} artistName - The name of the artist of the song.
      * @returns {boolean} True if the song is added successfully, false otherwise.
      */
-    addSongToPlaylist(playlistName, songTitle) {
+    addSongToPlaylist(playlistName, songTitle, artistName) {
 
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
@@ -182,22 +183,22 @@ module.exports = {
             return playlistError(playlistName, "not found"); 
         }
 
-        // Check if song exist
-        let songToAdd = songs.find(song => song.title === songTitle);
+        // Check if song and artist exist
+        let songToAdd = songs.find(song => song.title === songTitle && song.artist === artistName);
         if (!songToAdd) {
-            console.log(`Error: Song ${songTitle} not found.`);
+            console.log(`Error: Song '${songTitle}' by '${artistName}' not found.`);
             return false;
         }
         
-        // Check if the song already exists in the playlist
-        if (playlist.songs.some(song => song.title === songTitle)) {
-            console.log(`Error: Song '${songTitle}' already exists in playlist '${playlistName}'.`);
+        // Check if the song and artist already exists in the playlist
+        if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
+            console.log(`Error: Song '${songTitle}' by '${artistName}' already exists in playlist '${playlistName}'.`);
             return false;
         }
 
         // Add song to playlist
         playlist.songs.push(songToAdd);
-        console.log(`${songTitle} added to playlist, ${playlistName}.`);
+        console.log(`'${songTitle}' by '${artistName}' added to playlist, '${playlistName}'.`);
         return true;
     },
 
@@ -205,9 +206,10 @@ module.exports = {
      * Function to remove a song from a selected playlist.
      * @param {string} playlistName - The name of the playlist from which the song will be removed.
      * @param {string} songTitle - The title of the song to remove.
+     * @param {string} artistName - The name of the artist of the song.
      * @returns {boolean} True if the song is removed successfully, false otherwise.
      */
-    removeSongFromPlaylist(playlistName, songTitle) {
+    removeSongFromPlaylist(playlistName, songTitle, artistName) {
 
         // Check if playlist does not exist
         let playlist = findPlaylist(playlistName);
@@ -215,16 +217,16 @@ module.exports = {
             return playlistError(playlistName, "not found"); 
         }
 
-        // Check if song exist in playlist
-        const songIndex = playlist.songs.findIndex(song => song.title === songTitle);
+        // Check if song exists in playlist
+        const songIndex = playlist.songs.findIndex(song => song.title === songTitle && song.artist === artistName);
         if (songIndex === -1) {
-            console.log(`Error: Song '${songTitle}' not found in playlist '${playlistName}'.`);
+            console.log(`Error: Song '${songTitle}' by '${artistName}' not found in playlist '${playlistName}'.`);
             return false;
         }
 
         // Remove the song from the playlist
         playlist.songs.splice(songIndex, 1); 
-        console.log(`Song '${songTitle}' removed from playlist '${playlistName}'.`);
+        console.log(`Song '${songTitle}' by '${artistName}' removed from playlist '${playlistName}'.`);
         return true;
     }, 
 
@@ -272,7 +274,7 @@ module.exports = {
         // Show all songs with same as genre as songs in playlist
         else {
             console.log(`Recommendations for playlist '${playlistName}':`);
-            recommendations.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
+            recommendations.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
             return true;
         }
     }
