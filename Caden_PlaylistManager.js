@@ -231,6 +231,27 @@ module.exports = {
     }, 
 
     /**
+     * Function to delete a playlist and all of its contents.
+     * @param {string} playlistName - The name of the playlist to delete.
+     * @returns {boolean} True if the playlist is deleted successfully, false otherwise.
+     */
+    deletePlaylist(playlistName) {
+        
+        // Find the playlist to delete
+        const playlistIndex = playlists.findIndex(playlist => playlist.name === playlistName);
+
+        // Check if playlist does not exist
+        if (playlistIndex === -1) {
+            return playlistError(playlistName, "not found");
+        }
+
+        // Remove the playlist from the playlists array
+        playlists.splice(playlistIndex, 1);
+        console.log(`Playlist '${playlistName}' deleted.`);
+        return true;
+    },
+
+    /**
      * Function to recommend similar songs from the same genre as the songs in a playlist.
      * @param {string} playlistName - The name of the playlist for which recommendations will be made.
      * @returns {boolean} True if recommendations are displayed successfully, false if the playlist is not found or no recommendations are available.

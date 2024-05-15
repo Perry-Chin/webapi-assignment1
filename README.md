@@ -53,6 +53,9 @@ Once the module is installed, you can run the following functions:
 + **playlist.removeSongsFromPlaylist(playlistName, songName, artist)**     
     This function will remove a song from their playlist.
 
++ **playlist.deletePlaylist(playlistName)**     
+    This function allows the user to delete an existing playlist.
+
 + **playlist.recommendSongs(playlistName)**     
     This function provides users with song recommendations from the same genre as the songs in their playlist.
 
@@ -85,4 +88,7 @@ playlist.recommendSongs("NewPlaylist");
 
 // Remove a song from the playlist
 playlist.removeSongFromPlaylist("NewPlaylist", "Enemy", 'Imagine Dragons');
+
+// Delete the playlist
+playlist.deletePlaylist("NewPlaylist");
  ```
