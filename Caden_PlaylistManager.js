@@ -59,7 +59,7 @@ module.exports = {
      * Function to search for songs by the artist name or song title.
      * The search query is not case-sensitive and can take any form.
      * @param {string} query - The search query for song title or artist.
-     * @returns {Array} An array of songs matching the search query.
+     * @returns {boolean} True if songs are found matching the search query, false otherwise.
      */
     searchSongs(query) {
 
@@ -83,7 +83,7 @@ module.exports = {
         else {
             console.log("Search Results:");
             results.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
-            return results; // Return the array of found songs
+            return true;
         }
     },
 
