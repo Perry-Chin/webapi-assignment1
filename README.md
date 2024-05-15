@@ -1,9 +1,22 @@
 # Assignment 1 (Playlist Module)
 
-## Description
+<details>
+<summary>Table of contents</summary>
+
+## Table of contents
+
+- [Description](#description)
+- [Usage](#usage)
+- [Functions](#functions)
+- [Example](#example)
+
+</details>
+
+## Description(#assignment-1-(playlist-module))
+
 The is a Node.js module that allows users to manage their playlists by performing various operations such as searching for songs, creating playlists, editing playlist names, viewing playlist contents, adding and removing songs from playlists, and receiving song recommendations based on playlist content.
 
-## Usage
+## Usage(#assignment-1-(playlist-module))
 
 To use this module in your Node.js project, follow these steps:
 
@@ -19,7 +32,7 @@ To use this module in your Node.js project, follow these steps:
     node app.js
     ```
 
-## Functions
+## Functions(#assignment-1-(playlist-module))
 Once the module is installed, you can run the following functions:
 
 + **playlist.searchSongs(query)**     
@@ -43,7 +56,7 @@ Once the module is installed, you can run the following functions:
 + **playlist.recommendSongs(playlistName)**     
     This function provides users with song recommendations from the same genre as the songs in their playlist.
 
-## Example
+## Example(#assignment-1-(playlist-module))
 
 Below is an example of what the `app.js` file should look like
 
