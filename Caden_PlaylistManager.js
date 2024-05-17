@@ -41,7 +41,7 @@ function playlistExist(playlistName) {
  * @returns {boolean} Always returns false.
  */
 function playlistError(playlistName, message) {
-    console.log(`Error: Playlist with name '${playlistName}' ${message}.`);
+    console.error(`Error: Playlist with name '${playlistName}' ${message}.`);
     return false;
 }
 
@@ -107,7 +107,7 @@ module.exports = {
     },
 
     /**
-     * Edit the name of a playlist.
+     * Function to edit the name of a playlist.
      * @param {string} oldName - Current name of the playlist.
      * @param {string} newName - New name for the playlist.
      * @returns {boolean} True if playlist name is edited, false if playlist name is invalid or not found.
@@ -124,7 +124,7 @@ module.exports = {
         }
         
         if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
-            console.log(`Error: Playlist with name '${newName}' already exists.`);
+            console.error(`Error: Playlist with name '${newName}' already exists.`);
             return false;
         }
         else {
@@ -147,7 +147,7 @@ module.exports = {
         }
         
         if (playlist.songs.length === 0) {
-            console.log("Playlist is empty.");
+            console.error("Playlist is empty.");
             return false;
         } 
         else {
@@ -173,12 +173,12 @@ module.exports = {
 
         let songToAdd = songs.find(song => song.title === songTitle && song.artist === artistName);
         if (!songToAdd) {
-            console.log(`Error: Song ${songTitle} by ${artistName} not found.`);
+            console.error(`Error: Song ${songTitle} by ${artistName} not found.`);
             return false;
         }
         
         if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
-            console.log(`Error: Song ${songTitle} by ${artistName} already exists in playlist '${playlistName}'.`);
+            console.error(`Error: Song ${songTitle} by ${artistName} already exists in playlist '${playlistName}'.`);
             return false;
         }
         else {
@@ -204,7 +204,7 @@ module.exports = {
 
         const songIndex = playlist.songs.findIndex(song => song.title === songTitle && song.artist === artistName);
         if (songIndex === -1) {
-            console.log(`Error: Song ${songTitle} by ${artistName} not found in playlist '${playlistName}'.`);
+            console.error(`Error: Song ${songTitle} by ${artistName} not found in playlist '${playlistName}'.`);
             return false;
         }
         else {
@@ -244,13 +244,10 @@ module.exports = {
             return playlistError(playlistName, "not found"); 
         }
 
-        // Get all genres from songs in the playlist
         const playlistGenres = new Set(playlist.songs.flatMap(song => song.genre));
 
-        // Array to store recommendations
         const recommendations = [];
 
-        // Find songs with matching genres
         playlistGenres.forEach(genre => {
             const genreSongs = genreToSongsMap.get(genre);
             if (genreSongs) {

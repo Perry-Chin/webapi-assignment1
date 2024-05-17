@@ -80,9 +80,6 @@ playlist.addSongToPlaylist("MyPlaylist", "Enemy", 'Imagine Dragons');
 // View the contents of the playlist
 playlist.viewPlaylist("MyPlaylist");
 
-// Edit the playlist name
-playlist.editPlaylist("MyPlaylist", "NewPlaylist");
-
 // Get song recommendations based on the playlist
 playlist.recommendSongs("NewPlaylist");
 
