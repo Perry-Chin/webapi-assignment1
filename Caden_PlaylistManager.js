@@ -59,7 +59,7 @@ songs.forEach(song => {
 module.exports = {
 
     /**
-     * Function to search for songs by the artist or title (case-insensitive).
+     * Function to search for songs by the artist or title.
      * @param {string} query - Search query for song title or artist.
      * @returns {boolean} True if songs are found matching the search query, false otherwise.
      */
@@ -71,7 +71,6 @@ module.exports = {
             const lowerCaseTitle = song.title.toLowerCase();
             const lowerCaseArtist = song.artist.toLowerCase();
 
-            // Check if query is present in title or artist
             return lowerCaseTitle.includes(lowerCaseQuery) || 
                    lowerCaseArtist.includes(lowerCaseQuery);
         });
@@ -82,10 +81,9 @@ module.exports = {
         } 
         else {
             console.log("Search Results:");
-            results.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
+            results.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
             return true;
         }
-        
     },
 
     /**
@@ -107,7 +105,6 @@ module.exports = {
             console.log(`Playlist '${playlistName}' created.`);
             return true;
         }
-
     },
 
     /**
@@ -136,8 +133,7 @@ module.exports = {
             playlist.name = newName;
             console.log(`Playlist renamed from '${oldName}' to '${newName}'.`);
             return true;
-        }
-        
+        }    
     },
 
     /**
@@ -158,7 +154,7 @@ module.exports = {
         } 
         else {
             console.log(`Songs in ${playlistName}:`);
-            playlist.songs.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
+            playlist.songs.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
             return true;
         }
     },
@@ -179,20 +175,19 @@ module.exports = {
 
         let songToAdd = songs.find(song => song.title === songTitle && song.artist === artistName);
         if (!songToAdd) {
-            console.log(`Error: Song '${songTitle}' by '${artistName}' not found.`);
+            console.log(`Error: Song ${songTitle} by ${artistName} not found.`);
             return false;
         }
         
         if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
-            console.log(`Error: Song '${songTitle}' by '${artistName}' already exists in playlist '${playlistName}'.`);
+            console.log(`Error: Song ${songTitle} by ${artistName} already exists in playlist '${playlistName}'.`);
             return false;
         }
         else {
             playlist.songs.push(songToAdd);
-            console.log(`'${songTitle}' by '${artistName}' added to playlist, '${playlistName}'.`);
+            console.log(`${songTitle} by ${artistName} added to playlist, '${playlistName}'.`);
             return true;
         }
-        
     },
 
     /**
@@ -211,15 +206,14 @@ module.exports = {
 
         const songIndex = playlist.songs.findIndex(song => song.title === songTitle && song.artist === artistName);
         if (songIndex === -1) {
-            console.log(`Error: Song '${songTitle}' by '${artistName}' not found in playlist '${playlistName}'.`);
+            console.log(`Error: Song ${songTitle} by ${artistName} not found in playlist '${playlistName}'.`);
             return false;
         }
         else {
             playlist.songs.splice(songIndex, 1); 
-            console.log(`Song '${songTitle}' by '${artistName}' removed from playlist '${playlistName}'.`);
+            console.log(`Song ${songTitle} by ${artistName} removed from playlist '${playlistName}'.`);
             return true;
         }
-        
     }, 
 
     /**
@@ -228,7 +222,7 @@ module.exports = {
      * @returns {boolean} True if the playlist is deleted, false if the playlist not found.
      */
     deletePlaylist(playlistName) {
-        
+
         const playlistIndex = playlists.findIndex(playlist => playlist.name === playlistName);
         if (playlistIndex === -1) {
             return playlistError(playlistName, "not found");
@@ -238,7 +232,6 @@ module.exports = {
             console.log(`Playlist '${playlistName}' deleted.`);
             return true;
         }
-
     },
 
     /**
@@ -278,7 +271,7 @@ module.exports = {
         } 
         else {
             console.log(`Recommendations for playlist '${playlistName}':`);
-            recommendations.forEach(song => console.log(`- '${song.title}' by '${song.artist}'`));
+            recommendations.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
             return true;
         }
     }
