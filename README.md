@@ -23,7 +23,7 @@ To use this module in your Node.js project, follow these steps:
 1. Install Node.js if you don't have it already, download and install Node.js from https://nodejs.org/.
 2. Save the `Caden_PlaylistManager.js` file in your project directory.
 3. Create a new file named `app.js`
-4. In `app.js`, insert the code below to import the module using the correct file path
+4. In `app.js`, insert the code below to import the module:
     ```js
     const playlist = require('./Caden_PlaylistManager.js');
     ```

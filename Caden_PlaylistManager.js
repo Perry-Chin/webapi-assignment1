@@ -270,7 +270,7 @@ module.exports = {
             return false;
         } 
         else {
-            console.log(`Recommendations for playlist '${playlistName}':`);
+            console.log(`Recommendations for playlist, '${playlistName}':`);
             recommendations.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
             return true;
         }
