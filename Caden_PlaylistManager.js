@@ -69,7 +69,6 @@ module.exports = {
      * If no songs are found, return a message indicating that.
      */
     searchSongs(query) {
-
         const results = songs.filter(song => {
             const lowerCaseQuery = query.toLowerCase();
             const lowerCaseTitle = song.title.toLowerCase();
@@ -97,12 +96,11 @@ module.exports = {
      * Returns an error if the playlist name is invalid or already exists.
      */
     createPlaylist(playlistName) {
-
         if (!playlistName.trim()) {
             return errorMessage('Playlist', playlistName, "is not allowed"); 
         }
 
-        if (playlistExist(playlistName)) {
+        else if (playlistExist(playlistName)) {
             return errorMessage('Playlist', playlistName, "already exists"); 
         }
 
@@ -117,23 +115,22 @@ module.exports = {
      * @param {string} oldName - Current name of the playlist.
      * @param {string} newName - New name for the playlist.
      * @returns {string} A success message if playlist name is edited. 
-     * Returns an error message if playlist name is invalid, not found, or already exists.
+     * Returns an error message if playlist name is not found, invalid or already exists.
      */
     editPlaylist(oldName, newName) {
-
-        if (!newName.trim()) {
-            return errorMessage('Playlist', newName, "is not allowed"); 
-        }
-        
         let playlist = playlistExist(oldName);
         if (!playlist) {
             return errorMessage('Playlist', oldName, "not found"); 
-        }
-        
-        if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
-            return errorMessage('Playlist', newName, "already exists"); 
+        } 
+
+        else if (!newName.trim()) {
+            return errorMessage('Playlist', newName, "is not allowed"); 
         }
 
+        else if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
+            return errorMessage('Playlist', newName, "already exists"); 
+        }
+        
         else {
             playlist.name = newName;
             return `Playlist renamed from '${oldName}' to '${newName}'.`;
@@ -147,13 +144,12 @@ module.exports = {
      * Returns an error message if the playlist is not found or empty.
      */
     viewPlaylist(playlistName) {
-
         let playlist = playlistExist(playlistName);
         if (!playlist) {
             return errorMessage('Playlist', playlistName, "not found"); 
         }
         
-        if (playlist.songs.length === 0) {
+        else if (playlist.songs.length === 0) {
             return "Playlist is empty.";
         } 
 
@@ -173,7 +169,6 @@ module.exports = {
      * Returns an error message if the playlist is not found, the song is not found, or song already exists in playlist.
      */
     addSongToPlaylist(playlistName, songTitle, artistName) {
-
         let playlist = playlistExist(playlistName);
         if (!playlist) {
             return errorMessage('Playlist', playlistName, "not found"); 
@@ -184,7 +179,7 @@ module.exports = {
             return errorMessage('Song', `${songTitle} by ${artistName}`, "not found"); 
         }
         
-        if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
+        else if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
             return errorMessage('Song', `${songTitle} by ${artistName}`, "already exists in playlist"); 
         }
 
@@ -203,7 +198,6 @@ module.exports = {
      * Returns an error message if the playlist is not found or the song is not found.
      */
     removeSongFromPlaylist(playlistName, songTitle, artistName) {
-
         let playlist = playlistExist(playlistName);
         if (!playlist) {
             return errorMessage('Playlist', playlistName, "not found"); 
@@ -227,7 +221,6 @@ module.exports = {
      * Returns an error message if the playlist is not found.
      */
     deletePlaylist(playlistName) {
-
         const playlistIndex = playlists.findIndex(playlist => playlist.name === playlistName);
         if (playlistIndex === -1) {
             return errorMessage('Playlist', playlistName, "not found");
@@ -243,11 +236,9 @@ module.exports = {
      * Function to recommend songs from the same genre as the songs in a playlist.
      * @param {string} playlistName - Name of the playlist.
      * @returns {string} A string containing recommendations. 
-     * Returns an error message if the playlist is not found. 
-     * Returns a message indicating no recommendations were found if there are none.
+     * Returns an error message if the playlist is not found or if no recommendations are available.
      */
     recommendSongs(playlistName) {
-
         let playlist = playlistExist(playlistName);
         if (!playlist) {
             return errorMessage('Playlist', playlistName, "not found"); 
@@ -275,7 +266,7 @@ module.exports = {
         } 
 
         else {
-            let recommendationResults = `Recommendations for playlist, '${playlistName}':\n`;
+            let recommendationResults = `Recommendations for '${playlistName}':\n`;
             recommendationResults += recommendations.map(song => `- ${song.title} by ${song.artist}`).join('\n');
             return recommendationResults;
         }
