@@ -44,8 +44,7 @@ function playlistExist(playlistName) {
  * @returns {string} The error message.
  */
 function errorMessage(type, name, message) {
-    const error = `Error: ${type} with name '${name}' ${message}.`;
-    return error;
+    return `Error: ${type} with name '${name}' ${message}.`;
 }
 
 // A map to store songs organized by genre
