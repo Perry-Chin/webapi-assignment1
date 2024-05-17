@@ -45,7 +45,7 @@ function playlistError(playlistName, message) {
     return false;
 }
 
-// Create a mapping of genres to songs
+// A map to store songs organized by genre
 const genreToSongsMap = new Map();
 songs.forEach(song => {
     song.genre.forEach(genre => {
@@ -60,13 +60,12 @@ module.exports = {
 
     /**
      * Function to search for songs by the artist or title.
-     * @param {string} query - Search query for song title or artist.
-     * @returns {boolean} True if songs are found matching the search query, false otherwise.
+     * @param {string} query - Search query for song title or artist (Case-insensitive).
+     * @returns {boolean} True if songs are found, false otherwise.
      */
     searchSongs(query) {
 
         const results = songs.filter(song => {
-            // Convert to lowercase for case-insensitive search
             const lowerCaseQuery = query.toLowerCase();
             const lowerCaseTitle = song.title.toLowerCase();
             const lowerCaseArtist = song.artist.toLowerCase();
@@ -89,7 +88,7 @@ module.exports = {
     /**
      * Function to create a new playlist.
      * @param {string} playlistName - Name of the new playlist.
-     * @returns {boolean} True if the playlist is created, false if playlist name is invalid or already exist.
+     * @returns {boolean} True if playlist is created, false if playlist name is invalid or already exist.
      */
     createPlaylist(playlistName) {
 
@@ -111,7 +110,7 @@ module.exports = {
      * Edit the name of a playlist.
      * @param {string} oldName - Current name of the playlist.
      * @param {string} newName - New name for the playlist.
-     * @returns {boolean} True if the playlist name is edited, false if playlist name is invalid or not found.
+     * @returns {boolean} True if playlist name is edited, false if playlist name is invalid or not found.
      */
     editPlaylist(oldName, newName) {
 
@@ -124,7 +123,6 @@ module.exports = {
             return playlistError(oldName, "not found"); 
         }
         
-        // Check if the new playlist name already exists and is not the old name
         if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
             console.log(`Error: Playlist with name '${newName}' already exists.`);
             return false;
@@ -164,7 +162,7 @@ module.exports = {
      * @param {string} playlistName - Name of the playlist.
      * @param {string} songTitle - Title of the song to add.
      * @param {string} artistName - Artist of the song to add.
-     * @returns {boolean} True if the song is added, false if song or playlist not found or song already exist in playlist.
+     * @returns {boolean} True if song is added, false if song or playlist not found or song already exist in playlist.
      */
     addSongToPlaylist(playlistName, songTitle, artistName) {
 
@@ -195,7 +193,7 @@ module.exports = {
      * @param {string} playlistName - Name of the playlist.
      * @param {string} songTitle - Title of the song to remove.
      * @param {string} artistName - Artist of the song to remove.
-     * @returns {boolean} True if the song is removed, false if the playlist or song not found.
+     * @returns {boolean} True if song is removed, false if the playlist or song not found.
      */
     removeSongFromPlaylist(playlistName, songTitle, artistName) {
 
@@ -219,7 +217,7 @@ module.exports = {
     /**
      * Function to delete a playlist and all of its contents.
      * @param {string} playlistName - Name of the playlist to delete.
-     * @returns {boolean} True if the playlist is deleted, false if the playlist not found.
+     * @returns {boolean} True if playlist is deleted, false if the playlist not found.
      */
     deletePlaylist(playlistName) {
 
