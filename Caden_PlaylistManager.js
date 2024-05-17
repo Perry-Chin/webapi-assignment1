@@ -45,7 +45,6 @@ function playlistExist(playlistName) {
  */
 function errorMessage(type, name, message) {
     const error = `Error: ${type} with name '${name}' ${message}.`;
-    console.error(error);
     return error;
 }
 
