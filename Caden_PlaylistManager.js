@@ -38,9 +38,9 @@ function playlistExist(playlistName) {
 
 /**
  * Helper function to log an error message related to playlists or songs.
- * @param {string} type - Type of the entity ('Playlist' or 'Song').
- * @param {string} name - Name of the entity.
- * @param {string} message - Error message.
+ * @param {string} type - Type of error ('Playlist' or 'Song').
+ * @param {string} name - Name of the error.
+ * @param {string} message - Description of the error.
  * @returns {boolean} Always returns false.
  */
 function errorMessage(type, name, message) {
