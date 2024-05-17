@@ -1,5 +1,6 @@
 // Module to manage your playlist
 
+// An array of song objects
 const songs = [
     {
         title: 'Enemy',
@@ -23,6 +24,7 @@ const songs = [
     }
 ]
 
+// An array to store playlist objects
 const playlists = [];
 
 /**
@@ -35,13 +37,14 @@ function playlistExist(playlistName) {
 }
 
 /**
- * Helper function to log an error message related to playlists.
- * @param {string} playlistName - Name of the playlist.
+ * Helper function to log an error message related to playlists or songs.
+ * @param {string} type - Type of the entity ('Playlist' or 'Song').
+ * @param {string} name - Name of the entity.
  * @param {string} message - Error message.
  * @returns {boolean} Always returns false.
  */
-function playlistError(playlistName, message) {
-    console.error(`Error: Playlist with name '${playlistName}' ${message}.`);
+function errorMessage(type, name, message) {
+    console.error(`Error: ${type} with name '${name}' ${message}.`);
     return false;
 }
 
@@ -93,11 +96,11 @@ module.exports = {
     createPlaylist(playlistName) {
 
         if (!playlistName.trim()) {
-            return playlistError(playlistName, "is not allowed"); 
+            return errorMessage('Playlist', playlistName, "is not allowed"); 
         }
 
         if (playlistExist(playlistName)) {
-            return playlistError(playlistName, "already exists"); 
+            return errorMessage('Playlist', playlistName, "already exists"); 
         }
         else {
             playlists.push({ name: playlistName, songs: [] });
@@ -115,17 +118,16 @@ module.exports = {
     editPlaylist(oldName, newName) {
 
         if (!newName.trim()) {
-            return playlistError(newName, "is not allowed"); 
+            return errorMessage('Playlist', newName, "is not allowed"); 
         }
         
         let playlist = playlistExist(oldName);
         if (!playlist) {
-            return playlistError(oldName, "not found"); 
+            return errorMessage('Playlist', oldName, "not found"); 
         }
         
         if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
-            console.error(`Error: Playlist with name '${newName}' already exists.`);
-            return false;
+            return errorMessage('Playlist', newName, "already exists"); 
         }
         else {
             playlist.name = newName;
@@ -143,7 +145,7 @@ module.exports = {
 
         let playlist = playlistExist(playlistName);
         if (!playlist) {
-            return playlistError(playlistName, "not found"); 
+            return errorMessage('Playlist', playlistName, "not found"); 
         }
         
         if (playlist.songs.length === 0) {
@@ -168,18 +170,16 @@ module.exports = {
 
         let playlist = playlistExist(playlistName);
         if (!playlist) {
-            return playlistError(playlistName, "not found"); 
+            return errorMessage('Playlist', playlistName, "not found"); 
         }
 
         let songToAdd = songs.find(song => song.title === songTitle && song.artist === artistName);
         if (!songToAdd) {
-            console.error(`Error: Song ${songTitle} by ${artistName} not found.`);
-            return false;
+            return errorMessage('Song', `${songTitle} by ${artistName}`, "not found"); 
         }
         
         if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
-            console.error(`Error: Song ${songTitle} by ${artistName} already exists in playlist '${playlistName}'.`);
-            return false;
+            return errorMessage('Song', `${songTitle} by ${artistName}`, "already exists in playlist"); 
         }
         else {
             playlist.songs.push(songToAdd);
@@ -199,13 +199,12 @@ module.exports = {
 
         let playlist = playlistExist(playlistName);
         if (!playlist) {
-            return playlistError(playlistName, "not found"); 
+            return errorMessage('Playlist', playlistName, "not found"); 
         }
 
         const songIndex = playlist.songs.findIndex(song => song.title === songTitle && song.artist === artistName);
         if (songIndex === -1) {
-            console.error(`Error: Song ${songTitle} by ${artistName} not found in playlist '${playlistName}'.`);
-            return false;
+            return errorMessage('Song', `${songTitle} by ${artistName}`, "not found in playlist"); 
         }
         else {
             playlist.songs.splice(songIndex, 1); 
@@ -223,7 +222,7 @@ module.exports = {
 
         const playlistIndex = playlists.findIndex(playlist => playlist.name === playlistName);
         if (playlistIndex === -1) {
-            return playlistError(playlistName, "not found");
+            return errorMessage('Playlist', playlistName, "not found");
         } 
         else {
             playlists.splice(playlistIndex, 1);
@@ -241,11 +240,12 @@ module.exports = {
 
         let playlist = playlistExist(playlistName);
         if (!playlist) {
-            return playlistError(playlistName, "not found"); 
+            return errorMessage('Playlist', playlistName, "not found"); 
         }
 
         const playlistGenres = new Set(playlist.songs.flatMap(song => song.genre));
 
+        // An array to store recommendations
         const recommendations = [];
 
         playlistGenres.forEach(genre => {

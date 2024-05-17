@@ -36,13 +36,13 @@ To use this module in your Node.js project, follow these steps:
 Once the module is installed, you can run the following functions:
 
 + **playlist.searchSongs(query)**     
-    This function allows the user to search for songs by artist or title. The search query is not case-sensitive and can take any form.
+    This function allows the user to search for songs by artist or title. The search query is case-insensitive.
 
 + **playlist.createPlaylist(playlistName)**     
-    This function allows the user to create a playlist with the specified name. If the playlist name is already in use or is an empty string, an error will be returned.
+    This function allows the user to create a playlist with the specified name. 
 
 + **playlist.editPlaylist(oldname, newname)**     
-    This function allows the user to edit the name of an existing playlist. If the new name is empty or already exists (except for the old name), an error will be returned.
+    This function allows the user to edit the name of an existing playlist.
 
 + **playlist.viewPlaylist(playlistName)**     
     This function allows the user to view the songs in their playlist.
@@ -79,6 +79,9 @@ playlist.addSongToPlaylist("MyPlaylist", "Enemy", 'Imagine Dragons');
 
 // View the contents of the playlist
 playlist.viewPlaylist("MyPlaylist");
+
+// Edit the playlist name
+playlist.editPlaylist("MyPlaylist", "NewPlaylist");
 
 // Get song recommendations based on the playlist
 playlist.recommendSongs("NewPlaylist");
