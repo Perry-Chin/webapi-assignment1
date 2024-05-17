@@ -41,11 +41,12 @@ function playlistExist(playlistName) {
  * @param {string} type - Type of error ('Playlist' or 'Song').
  * @param {string} name - Name of the entity causing the error.
  * @param {string} message - Description of the error.
- * @returns {boolean} Always returns false.
+ * @returns {string} The error message.
  */
 function errorMessage(type, name, message) {
-    console.error(`Error: ${type} with name '${name}' ${message}.`);
-    return false;
+    const error = `Error: ${type} with name '${name}' ${message}.`;
+    console.error(error);
+    return error;
 }
 
 // A map to store songs organized by genre
@@ -64,7 +65,8 @@ module.exports = {
     /**
      * Function to search for songs by the artist or title.
      * @param {string} query - Search query for song title or artist (Case-insensitive).
-     * @returns {boolean} True if songs are found, false otherwise.
+     * @returns {string} A string containing the search results. 
+     * If no songs are found, return a message indicating that.
      */
     searchSongs(query) {
 
@@ -78,20 +80,21 @@ module.exports = {
         });
 
         if (results.length === 0) {
-            console.log("No songs found matching your search.");
-            return false;
+            return "No songs found matching your search.";
         } 
+
         else {
-            console.log("Search Results:");
-            results.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
-            return true;
+            let searchResults = "Search Results:\n";
+            searchResults += results.map(song => `- ${song.title} by ${song.artist}`).join('\n');
+            return searchResults;
         }
     },
 
     /**
      * Function to create a new playlist.
      * @param {string} playlistName - Name of the new playlist.
-     * @returns {boolean} True if playlist is created, false if playlist name is invalid or already exist.
+     * @returns {string} A success message if the playlist is created. 
+     * Returns an error if the playlist name is invalid or already exists.
      */
     createPlaylist(playlistName) {
 
@@ -102,10 +105,10 @@ module.exports = {
         if (playlistExist(playlistName)) {
             return errorMessage('Playlist', playlistName, "already exists"); 
         }
+
         else {
             playlists.push({ name: playlistName, songs: [] });
-            console.log(`Playlist '${playlistName}' created.`);
-            return true;
+            return `Playlist '${playlistName}' created.`; 
         }
     },
 
@@ -113,7 +116,8 @@ module.exports = {
      * Function to edit the name of a playlist.
      * @param {string} oldName - Current name of the playlist.
      * @param {string} newName - New name for the playlist.
-     * @returns {boolean} True if playlist name is edited, false if playlist name is invalid or not found.
+     * @returns {string} A success message if playlist name is edited. 
+     * Returns an error message if playlist name is invalid, not found, or already exists.
      */
     editPlaylist(oldName, newName) {
 
@@ -129,17 +133,18 @@ module.exports = {
         if (playlists.some(playlist => playlist.name === newName && playlist.name !== oldName)) {
             return errorMessage('Playlist', newName, "already exists"); 
         }
+
         else {
             playlist.name = newName;
-            console.log(`Playlist renamed from '${oldName}' to '${newName}'.`);
-            return true;
+            return `Playlist renamed from '${oldName}' to '${newName}'.`;
         }    
     },
 
     /**
      * Function to view all songs in a selected playlist with title and artist.
      * @param {string} playlistName - Name of the playlist to view.
-     * @returns {boolean} True if songs are displayed successfully, false if the playlist is empty or not found.
+     * @returns {string} A string containing songs in the playlist. 
+     * Returns an error message if the playlist is not found or empty.
      */
     viewPlaylist(playlistName) {
 
@@ -149,13 +154,13 @@ module.exports = {
         }
         
         if (playlist.songs.length === 0) {
-            console.error("Playlist is empty.");
-            return false;
+            return "Playlist is empty.";
         } 
+
         else {
-            console.log(`Songs in ${playlistName}:`);
-            playlist.songs.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
-            return true;
+            let playlistContent = `Songs in ${playlistName}:\n`;
+            playlistContent += playlist.songs.map(song => `- ${song.title} by ${song.artist}`).join('\n');
+            return playlistContent;
         }
     },
 
@@ -164,7 +169,8 @@ module.exports = {
      * @param {string} playlistName - Name of the playlist.
      * @param {string} songTitle - Title of the song to add.
      * @param {string} artistName - Artist of the song to add.
-     * @returns {boolean} True if song is added, false if song or playlist not found or song already exist in playlist.
+     * @returns {string} A success message if song is added.
+     * Returns an error message if the playlist is not found, the song is not found, or song already exists in playlist.
      */
     addSongToPlaylist(playlistName, songTitle, artistName) {
 
@@ -181,10 +187,10 @@ module.exports = {
         if (playlist.songs.some(song => song.title === songTitle && song.artist === artistName)) {
             return errorMessage('Song', `${songTitle} by ${artistName}`, "already exists in playlist"); 
         }
+
         else {
             playlist.songs.push(songToAdd);
-            console.log(`${songTitle} by ${artistName} added to playlist, '${playlistName}'.`);
-            return true;
+            return `${songTitle} by ${artistName} added to playlist, '${playlistName}'.`;
         }
     },
 
@@ -193,7 +199,8 @@ module.exports = {
      * @param {string} playlistName - Name of the playlist.
      * @param {string} songTitle - Title of the song to remove.
      * @param {string} artistName - Artist of the song to remove.
-     * @returns {boolean} True if song is removed, false if the playlist or song not found.
+     * @returns {string} A success message if song is removed. 
+     * Returns an error message if the playlist is not found or the song is not found.
      */
     removeSongFromPlaylist(playlistName, songTitle, artistName) {
 
@@ -206,17 +213,18 @@ module.exports = {
         if (songIndex === -1) {
             return errorMessage('Song', `${songTitle} by ${artistName}`, "not found in playlist"); 
         }
+        
         else {
             playlist.songs.splice(songIndex, 1); 
-            console.log(`Song ${songTitle} by ${artistName} removed from playlist '${playlistName}'.`);
-            return true;
+            return `Song ${songTitle} by ${artistName} removed from playlist '${playlistName}'.`;
         }
     }, 
 
     /**
      * Function to delete a playlist and all of its contents.
      * @param {string} playlistName - Name of the playlist to delete.
-     * @returns {boolean} True if playlist is deleted, false if the playlist not found.
+     * @returns {string} A success message if playlist is deleted. 
+     * Returns an error message if the playlist is not found.
      */
     deletePlaylist(playlistName) {
 
@@ -224,17 +232,19 @@ module.exports = {
         if (playlistIndex === -1) {
             return errorMessage('Playlist', playlistName, "not found");
         } 
+
         else {
             playlists.splice(playlistIndex, 1);
-            console.log(`Playlist '${playlistName}' deleted.`);
-            return true;
+            return `Playlist '${playlistName}' deleted.`;
         }
     },
 
     /**
      * Function to recommend songs from the same genre as the songs in a playlist.
      * @param {string} playlistName - Name of the playlist.
-     * @returns {boolean} True if recommendations are displayed, false if the playlist is not found or no recommendations are available.
+     * @returns {string} A string containing recommendations. 
+     * Returns an error message if the playlist is not found. 
+     * Returns a message indicating no recommendations were found if there are none.
      */
     recommendSongs(playlistName) {
 
@@ -261,13 +271,13 @@ module.exports = {
         });
 
         if (recommendations.length === 0) {
-            console.log("No recommendations found.");
-            return false;
+            return "No recommendations found.";
         } 
+
         else {
-            console.log(`Recommendations for playlist, '${playlistName}':`);
-            recommendations.forEach(song => console.log(`- ${song.title} by ${song.artist}`));
-            return true;
+            let recommendationResults = `Recommendations for playlist, '${playlistName}':\n`;
+            recommendationResults += recommendations.map(song => `- ${song.title} by ${song.artist}`).join('\n');
+            return recommendationResults;
         }
     }
 }
